@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_marginTop="5sp"
+    android:padding="10sp"
+    android:layout_height="match_parent">
+        <TextView
+            android:id="@+id/item_billdetais_ten_mn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10sp"
+            android:text="Ten "
+            android:textSize="20sp" />
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_gravity="end"
+            android:layout_marginRight="10sp"
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/item_billdetails_number_mn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="10"
+                android:textSize="20sp" />
+            <TextView
+                android:id="@+id/item_billdetails_price_mn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10sp"
+                android:layout_marginRight="20sp"
+                android:text="100000"
+                android:textSize="20sp" />
+            <CheckBox
+                android:layout_width="wrap_content"
+                android:id="@+id/item_billdetails_checkbox_mn"
+                android:layout_marginRight="5dp"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+</android.support.v7.widget.CardView>

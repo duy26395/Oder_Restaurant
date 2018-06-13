@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:layout_marginBottom="50sp"
+        android:layout_height="match_parent">
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_weight="3"
+        android:layout_height="match_parent">
+    <android.support.v7.widget.RecyclerView
+    android:id="@+id/fg_mn_food_recycle"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_below="@+id/hi"
+    android:padding="10dp">
+    </android.support.v7.widget.RecyclerView>
+
+    </android.support.v7.widget.CardView>
+    <LinearLayout
+    android:layout_width="match_parent"
+    android:gravity="center"
+    android:layout_weight="1"
+        android:layout_marginTop="10sp"
+    android:layout_height="wrap_content">
+    <Button
+    android:layout_width="wrap_content"
+    android:id="@+id/manager_food_delete"
+    android:layout_height="wrap_content"
+    android:background="@drawable/design_button"
+    android:layout_marginRight="20sp"
+    android:text="Xoá"/>
+    <Button
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@drawable/design_button"
+    android:id="@+id/manager_food_add"
+    android:text="Thêm"/>
+
+    </LinearLayout>
+    </LinearLayout>
+
+</android.support.constraint.ConstraintLayout>
