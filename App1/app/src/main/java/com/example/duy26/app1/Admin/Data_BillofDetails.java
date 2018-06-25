@@ -1,15 +1,24 @@
 package com.example.duy26.app1.Admin;
 
 public class Data_BillofDetails {
-    String ten_food;
-    int number,price;
+    int id;
+    String ten_food,number,price;
     private boolean isSelected;
 
-    public Data_BillofDetails(String ten_food, int number, int price) {
+    public Data_BillofDetails(int id,String ten_food, String number, String price) {
+        this.id = id;
         this.ten_food = ten_food;
         this.number = number;
         this.price = price;
         this.isSelected = isSelected;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getTen_food() {
@@ -20,19 +29,19 @@ public class Data_BillofDetails {
         this.ten_food = ten_food;
     }
 
-    public int getNumber() {
+    public String getNumber() {
         return number;
     }
 
-    public void setNumber(int number) {
+    public void setNumber(String number) {
         this.number = number;
     }
 
-    public int getPrice() {
+    public String getPrice() {
         return price;
     }
 
-    public void setPrice(int price) {
+    public void setPrice(String price) {
         this.price = price;
     }
 

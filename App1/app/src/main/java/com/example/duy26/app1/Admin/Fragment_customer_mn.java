@@ -313,7 +313,7 @@ public class Fragment_customer_mn extends Fragment {
                 if (success == false) {
                     Toast.makeText(getContext(), msg, Toast.LENGTH_LONG).show();
                 } else {
-                    Toast.makeText(getContext(), "successfully", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), "successfully", Toast.LENGTH_LONG).show();
                 }
                 onResume();
             }
@@ -327,7 +327,7 @@ public class Fragment_customer_mn extends Fragment {
                 if (success == false) {
                     Toast.makeText(getContext(), msg, Toast.LENGTH_LONG).show();
                 } else {
-                    Toast.makeText(getContext(), "successfully", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), "successfully", Toast.LENGTH_LONG).show();
                 }
                 onResume();
             }

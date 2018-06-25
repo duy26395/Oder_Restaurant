@@ -1,8 +1,11 @@
 package com.example.duy26.app1.Admin;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -46,9 +49,16 @@ public class Adapter_delete_clickLong extends RecyclerView.Adapter<Adapter_delet
     @Override
     public void onBindViewHolder(@NonNull final ViewHolder holder, int position) {
         holder.txtname.setText(data_billdetails_dinaries.get(position).getName_food());
-        Glide.with(context)
-                .load(data_billdetails_dinaries.get(position).getImage())
-                .into(holder.imageView);
+        String i = data_billdetails_dinaries.get(position).getImage();
+        try {
+            if (i.contains("http")) {
+                Glide.with(context)
+                        .load(i)
+                        .into(holder.imageView);
+            } else Glide.with(context)
+                    .load(decodeBase64(i))
+                    .into(holder.imageView);
+        }catch (Exception e){}
         holder.checkBox.setOnCheckedChangeListener(null);
         holder.checkBox.setChecked(data_billdetails_dinaries.get(position).isSelected());
         holder.checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -88,5 +98,14 @@ public class Adapter_delete_clickLong extends RecyclerView.Adapter<Adapter_delet
     public void update_delete_food(ArrayList<Data_delete_food_clicklong> todolist){
         this.data_billdetails_dinaries = todolist;
         notifyDataSetChanged();
+    }
+    public static Bitmap decodeBase64(String input)
+    {
+        Bitmap bitmap;
+        BitmapFactory.Options options = new BitmapFactory.Options();
+        options.inJustDecodeBounds =false;
+        options.inPreferredConfig = Bitmap.Config.ARGB_8888;
+        byte[] decodedBytes = Base64.decode(input,Base64.DEFAULT);
+        return BitmapFactory.decodeByteArray(decodedBytes,0,decodedBytes.length,options);
     }
 }

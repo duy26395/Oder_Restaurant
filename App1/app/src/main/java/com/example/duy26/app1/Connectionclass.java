@@ -8,8 +8,8 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class Connectionclass {
-//    String ip = "192.168.1.11:1433";
-    String ip = "192.168.1.6:1433";
+//    String ip = "192.168.0.2:1433";
+    String ip = "192.168.1.4:1433";
     String db = "App1_DB";
     String db_user = "ahihi";
     String password = "123123";

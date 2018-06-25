@@ -1,10 +1,14 @@
 package com.example.duy26.app1;
 
+import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,26 +18,32 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.duy26.app1.Admin.Admin_home;
+import com.example.duy26.app1.Admin.Bill_ofDetails_Insert_interface;
+
+import java.lang.invoke.MethodHandles;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 
+import static android.content.Context.MODE_PRIVATE;
+
 public class Dialog_fragment_oder extends DialogFragment {
     TextView name1,gia1;
+    private Context context;
     EditText soluong,ghichu;
     SQLiteHander sqLiteHander;
+    SessionManager session;
     private String id_bill,id_employess,id_food,dongia,ten;
+    private String s1;
+    private Bill_ofDetails_Insert_interface insertInterface;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_oderrbill, container, false);
-    }
+        View view =  inflater.inflate(R.layout.fragment_oderrbill, container, false);
 
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
 
         ten = getArguments().getString("NAME_KEY");
         id_food= getArguments().getString("ID_KEY");
@@ -62,25 +72,55 @@ public class Dialog_fragment_oder extends DialogFragment {
                 dismiss();
             }
         });
+        session = new SessionManager(getActivity());
 
         btn_confirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                sendata();
-                getDialog().dismiss();
+                if(session.admin())
+                {
+                    send_data_mn();
+                    getDialog().dismiss();
+                    Toast.makeText(getActivity(),"Admin",Toast.LENGTH_LONG).show();
+                }
+
+                else if (session.isLoggedIn())
+                {
+                    sendata();
+                    getDialog().dismiss();
+                }
+
+
             }
         });
+
+        return view;
+
+    }
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        try {
+            insertInterface = (Bill_ofDetails_Insert_interface) activity;
+        }
+        catch (ClassCastException e) {
+            Log.d("MyDialog", "Activity doesn't implement the ISelectedData interface");
+        }
+    }
+
+    private void send_data_mn()  {
+        s1 = soluong.getText().toString().trim();
+        String note = ghichu.getText().toString().trim();
+        insertInterface.result(id_food,Integer.parseInt(s1));
 
     }
 
     private void sendata() {
         String sl;
         sl = soluong.getText().toString().trim();
-        Log.e("SLLLLLLLLLLLL",sl);
         String note = ghichu.getText().toString().trim();
-
-        Log.e("SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS",id_bill);
 
         sqLiteHander = new SQLiteHander(getContext());
         Data_oderdetails data_oderdetails = new Data_oderdetails();

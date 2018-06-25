@@ -57,7 +57,7 @@ public class Fragment_TYPE_FOOD extends Fragment {
 
                 Bundle bundle = new Bundle();
                 bundle.putString("NAME_FOOD", data_food_type.getName());
-                bundle.putInt("ID_FOOD",data_food_type.getId_tpye());
+                bundle.putString("ID_FOOD",data_food_type.getId_tpye());
                 Fragment_ins_foodtype Fragment = new Fragment_ins_foodtype();
                 Fragment.setArguments(bundle);
 
@@ -91,9 +91,9 @@ public class Fragment_TYPE_FOOD extends Fragment {
                             for (Data_food_type number : data_food_types) {
                                 if (number.isSelected()) {
                                     Fragment_delete_idFOOD Fragment = new Fragment_delete_idFOOD();
-                                    int id_group = number.getId_tpye();
+                                    String  id_group = number.getId_tpye();
                                     Bundle bundle = new Bundle();
-                                    bundle.putInt("ID_GROUP", id_group);
+                                    bundle.putString("ID_GROUP", id_group);
                                     Fragment.setArguments(bundle);
                                     FragmentManager fragmentManager = getChildFragmentManager();
                                     Fragment.show(fragmentManager, null);
@@ -108,7 +108,7 @@ public class Fragment_TYPE_FOOD extends Fragment {
                                     String query = "DELETE FROM Group_Food WHERE id_Group=? ";
                                     try {
                                         PreparedStatement preparedStatement = connection.prepareStatement(query);
-                                        preparedStatement.setInt(1, number.getId_tpye());
+                                        preparedStatement.setString(1, number.getId_tpye());
                                         preparedStatement.executeUpdate();
 
                                     } catch (SQLException e) {
@@ -214,7 +214,7 @@ public class Fragment_TYPE_FOOD extends Fragment {
             if (resultSet != null) {
                 while (resultSet.next()) {
                     try {
-                        data_food_types.add(new Data_food_type(resultSet.getInt("id_Group"),
+                        data_food_types.add(new Data_food_type(resultSet.getString("id_Group"),
                                 resultSet.getString("Name_group")));
                     } catch (Exception e) {
                         e.printStackTrace();

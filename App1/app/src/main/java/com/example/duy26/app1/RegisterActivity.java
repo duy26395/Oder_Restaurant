@@ -67,7 +67,7 @@ public class RegisterActivity extends AppCompatActivity {
 
         @Override
         protected void onPreExecute() {
-            dialog = ProgressDialog.show(getApplicationContext(), "Loangding", "Please wait....", true);
+            dialog = ProgressDialog.show(getApplicationContext(), "Loading", "Please wait....", true);
         }
 
         @Override

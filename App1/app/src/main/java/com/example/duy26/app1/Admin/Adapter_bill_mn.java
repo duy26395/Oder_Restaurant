@@ -1,5 +1,6 @@
 package com.example.duy26.app1.Admin;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
@@ -86,10 +87,11 @@ public class Adapter_bill_mn extends RecyclerView.Adapter<Adapter_bill_mn.ViewHo
 
         }
 
+        @SuppressLint("SetTextI18n")
         void bindData(Data_mn_BILL_details data_tt) {
-            date.setText(""+data_tt.getDate());
-            id_user.setText(""+data_tt.getTenuser());
-            id_employee.setText(""+data_tt.getTennv());
+            date.setText(""+data_tt.getDate().trim());
+            id_user.setText(""+data_tt.getTenuser().trim());
+            id_employee.setText(""+data_tt.getTennv().trim());
         }
 
     }

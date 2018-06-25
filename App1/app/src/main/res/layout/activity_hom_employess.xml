@@ -19,11 +19,7 @@
         android:layout_below="@id/logo"
         android:orientation="vertical"
         android:layout_height="match_parent">
-        <!--<android.support.v7.widget.SearchView-->
-            <!--android:hint="Phone Number"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:id="@+id/ideditsearch" />-->
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">

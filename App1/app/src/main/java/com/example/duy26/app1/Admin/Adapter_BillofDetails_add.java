@@ -1,4 +1,4 @@
-package com.example.duy26.app1;
+package com.example.duy26.app1.Admin;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -16,17 +16,20 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.example.duy26.app1.CustomItemClickListener;
+import com.example.duy26.app1.Data;
+import com.example.duy26.app1.Data_Food;
+import com.example.duy26.app1.R;
 
 import java.util.ArrayList;
 
-public class Adapter_food extends RecyclerView.Adapter<Adapter_food.viewholder>implements Filterable,CustomItemClickListener
-{
+public class Adapter_BillofDetails_add extends RecyclerView.Adapter<Adapter_BillofDetails_add.viewholder> implements Filterable,CustomItemClickListener {
     private ArrayList<Data_Food> data_foods;
     private ArrayList<Data_Food> fUserList;
     private Context context;
     private CustomItemClickListener customItemClickListener;
 
-    public Adapter_food(ArrayList<Data_Food> arrayList, Context context,CustomItemClickListener customItemClickListener) {
+    public Adapter_BillofDetails_add(ArrayList<Data_Food> arrayList, Context context,CustomItemClickListener customItemClickListener) {
         this.data_foods = arrayList;
         this.fUserList = arrayList;
         this.context = context;
@@ -34,10 +37,10 @@ public class Adapter_food extends RecyclerView.Adapter<Adapter_food.viewholder>i
     }
     @NonNull
     @Override
-    public viewholder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public Adapter_BillofDetails_add.viewholder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
         View itemview = layoutInflater.inflate(R.layout.item_food,parent,false);
-        final Adapter_food.viewholder holder1 = new Adapter_food.viewholder(itemview);
+        final Adapter_BillofDetails_add.viewholder holder1 = new Adapter_BillofDetails_add.viewholder(itemview);
         itemview.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -51,9 +54,6 @@ public class Adapter_food extends RecyclerView.Adapter<Adapter_food.viewholder>i
     @Override
     public void onBindViewHolder(@NonNull viewholder holder, int position) {
         holder.txtname.setText(fUserList.get(position).getName_food());
-//        Glide.with(context)
-//                .load(fUserList.get(position).getImage())
-//                .into(holder.imageView);
         String i = fUserList.get(position).getImage();
         try {
             if (i.contains("http")) {
@@ -65,6 +65,7 @@ public class Adapter_food extends RecyclerView.Adapter<Adapter_food.viewholder>i
                     .into(holder.imageView);
         }catch (Exception e){}
     }
+
 
     @Override
     public int getItemCount() {

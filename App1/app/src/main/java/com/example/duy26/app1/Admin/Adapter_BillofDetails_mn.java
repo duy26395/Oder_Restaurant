@@ -1,8 +1,10 @@
 package com.example.duy26.app1.Admin;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,7 +21,7 @@ public class Adapter_BillofDetails_mn extends RecyclerView.Adapter<Adapter_Billo
     private Context context;
     private Click_BillofDetails onItemClick;
 
-    public Adapter_BillofDetails_mn(ArrayList<Data_BillofDetails> data_dinaries, Context context, Click_BillofDetails onItemClick) {
+    Adapter_BillofDetails_mn(ArrayList<Data_BillofDetails> data_dinaries, Context context, Click_BillofDetails onItemClick) {
         this.data_dinaries = data_dinaries;
         this.context = context;
         this.onItemClick = onItemClick;
@@ -70,22 +72,26 @@ public class Adapter_BillofDetails_mn extends RecyclerView.Adapter<Adapter_Billo
 
     class ViewHolder extends RecyclerView.ViewHolder {
 
-        private TextView id_bill, id_employee, id_user;
+        private TextView id,number,price;
         CheckBox checkBox;
 
         public ViewHolder(View itemView) {
             super(itemView);
-            id_bill = (TextView) itemView.findViewById(R.id.item_billdetais_ten_mn);
-            id_employee = (TextView) itemView.findViewById(R.id.item_billdetails_number_mn);
-            id_user = (TextView) itemView.findViewById(R.id.item_dinarydetails_gia);
-            checkBox = (CheckBox)itemView.findViewById(R.id.item_billdetails_checkbox_mn);
+            id = itemView.findViewById(R.id.item_billdetais_ten_mn);
+            number = itemView.findViewById(R.id.item_billdetails_number_mn);
+            price = itemView.findViewById(R.id.item_billdetails_price_mn);
+            checkBox = itemView.findViewById(R.id.item_billdetails_checkbox_mn);
 
         }
-
         void bindData(Data_BillofDetails data_tt) {
-            id_bill.setText(data_tt.getTen_food());
-            id_user.setText("" + data_tt.getPrice());
-            id_employee.setText("" + data_tt.getNumber());
+
+            id.setText(data_tt.getTen_food());
+            price.setText(data_tt.getPrice());
+            number.setText(data_tt.getNumber());
         }
+    }
+    public void update_Billdetails(ArrayList<Data_BillofDetails> todolist){
+        this.data_dinaries = todolist;
+        notifyDataSetChanged();
     }
 }

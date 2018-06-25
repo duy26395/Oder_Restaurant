@@ -59,7 +59,9 @@ public class FullscreenDialogFragment extends DialogFragment {
         int i = getArguments().getInt("ID_BILL");
         data_dinary = new ArrayList<Data_billdetails_dinary>();
 
-        String query = "SELECT Food.NameFood,Bill_details.Number,Bill_details.Price FROM Food ,Bill_details Where Bill_details.idbill = '" + i + "'";
+        String query = "SELECT Food.NameFood,Bill_details.Number,Food.Prince FROM " +
+                "Food JOIN Bill_details ON Food.idfood = Bill_details.idfood Where" +
+                " Bill_details.idbill = '" + i + "'";
         try {
             Statement statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery(query);
