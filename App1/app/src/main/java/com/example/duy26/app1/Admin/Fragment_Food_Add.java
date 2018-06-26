@@ -232,8 +232,9 @@ public class Fragment_Food_Add extends android.support.v4.app.DialogFragment {
             }
 
         } catch (Exception ignored) {
+
         }
-        Log.e("LOG_DB_FOOOD_TYPE", String.valueOf(data_food_types));
+
     }
     private String get_defaul_name(String hihi) {
         connectionclass = new Connectionclass();

@@ -43,9 +43,6 @@ public class LoginActivity extends AppCompatActivity{
         password = (EditText) findViewById(R.id.idpass);
 
         session = new SessionManager(getApplicationContext());
-
-//        SharedPreferences preferences = getSharedPreferences("ID_ADD",MODE_PRIVATE);
-//        String id = preferences.getString("AD","");
         if(session.admin())
                 {
                     Intent intent = new Intent(LoginActivity.this, Admin_home.class);
@@ -105,7 +102,6 @@ public class LoginActivity extends AppCompatActivity{
                                 adminlog = false;
                                 msg = "Kết nối thất bại, kiểm tra kết nối";
                             } else {
-                                Log.e("QQQQQQQQQQQQQQQQQ", "connect");
                                 String query = "SELECT * FROM [Employess] WHERE Phone_Employess= '" + ad + "' " +
                                         "AND Password_employess = '" + passwordd.toString() + "' ";
                                 Statement statement = connection.createStatement();
@@ -140,7 +136,6 @@ public class LoginActivity extends AppCompatActivity{
                             adminlog = false;
                             msg = "Kết nối thất bại, kiểm tra kết nối";
                         } else {
-                            Log.e("QQQQQQQQQQQQQQQQQ", "connect");
                             String query = "SELECT * FROM [Employess] WHERE Phone_Employess= '" + usernam.toString() + "' " +
                                     "AND Password_employess = '" + passwordd.toString() + "' ";
                             Statement statement = connection.createStatement();
@@ -201,8 +196,6 @@ public class LoginActivity extends AppCompatActivity{
                         SharedPreferences.Editor editor = preferences.edit();
                         editor.putString("ID", datalist.get(0).getId());
                         editor.commit();
-
-                        Log.e("LOGIN_______________IN", preferences.getString("ID", ""));
 
                     }
 

@@ -2,6 +2,7 @@ package com.example.duy26.app1;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -13,11 +14,15 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class Dinary extends AppCompatActivity {
 
     private Connectionclass connectionclass;
     private ArrayList<Data_Dinary> data_dinary;
+    private String check_id;
+    private Boolean check = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,16 +74,55 @@ public class Dinary extends AppCompatActivity {
         Adapter_dinary adapter_dinary = new Adapter_dinary(data_dinary, Dinary.this, new Onitemclick123() {
             @Override
             public void onItem(Data_Dinary data_dinary, int post) {
-                Bundle bundle = new Bundle();
-                bundle.putInt("ID_BILL",data_dinary.getId_bill());
-                FullscreenDialogFragment newFragment = new FullscreenDialogFragment();
-                newFragment.setArguments(bundle);
-                newFragment.show(getFragmentManager(),null);
+                check_id = String.valueOf(data_dinary.id_bill);
+                check_bill();
+                if (check == true)
+                {
+                    Bundle bundle = new Bundle();
+                    bundle.putInt("ID_BILL",data_dinary.getId_bill());
+                    FullscreenDialogFragment newFragment = new FullscreenDialogFragment();
+                    newFragment.setArguments(bundle);
+                    newFragment.show(getFragmentManager(),null);
+                } else
+                {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(Dinary.this);
+                    builder.setTitle("Hoá Đơn ");
+                    builder.setMessage("Hoá đơn trống");
+                    final AlertDialog alert = builder.create();
+                    alert.show();
+                    final Timer timer = new Timer();
+                    timer.schedule(new TimerTask() {
+                        @Override
+                        public void run() {
+                            alert.dismiss();
+                            timer.cancel();
+                        }
+                    },3000);// 3s
+                }
+
             }
         });
         recyclerView.setAdapter(adapter_dinary);
-
     }
 
+    private void check_bill(){
+        connectionclass = new Connectionclass();
+        Connection connection = connectionclass.CONN();
+        try {
+            String query = "SELECT * FROM [Bill_details] WHERE idbill= '" + Integer.parseInt(check_id) + "'";
+            Statement preparedStatement = connection.createStatement();
+            ResultSet resultSet = preparedStatement.executeQuery(query);
+            if (resultSet.next()) {
+                try {
+                    check = true;
+                } catch (Exception e) {
+                }
+            } else {
+                check = false;
+            }
+        } catch (Exception e) { }
+
+
+    }
 
 }

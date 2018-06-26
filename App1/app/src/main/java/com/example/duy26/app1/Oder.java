@@ -47,9 +47,6 @@ public class Oder extends AppCompatActivity {
         //nhan data id_employess
         SharedPreferences preferences = getSharedPreferences("ID_EMPLOYESS",MODE_PRIVATE);
         id_employess = preferences.getString("ID","");
-        Log.e("++++++++++++++",id_employess);
-
-
 
         TextView name_user = (TextView)findViewById(R.id.id_odername);
         TextView phone_user = (TextView)findViewById(R.id.id_oderphone);
@@ -122,7 +119,6 @@ public class Oder extends AppCompatActivity {
             if (resultSet.next())
             {
                 id_bill = resultSet.getString(1);
-                Log.e("ID_____________BILL", String.valueOf(id_bill));
             } }catch (Exception  e) {}
     }
 

@@ -21,10 +21,14 @@ import android.widget.Toast;
 import com.example.duy26.app1.Admin.Admin_home;
 import com.example.duy26.app1.Admin.Bill_ofDetails_Insert_interface;
 
+import java.io.PrintWriter;
+import java.io.StringWriter;
+import java.io.Writer;
 import java.lang.invoke.MethodHandles;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 
 import static android.content.Context.MODE_PRIVATE;
@@ -38,6 +42,9 @@ public class Dialog_fragment_oder extends DialogFragment {
     private String id_bill,id_employess,id_food,dongia,ten;
     private String s1;
     private Bill_ofDetails_Insert_interface insertInterface;
+    Connectionclass connectionclass;
+    private Boolean success = false;
+    private String msg = "";
 
     @Nullable
     @Override
@@ -82,7 +89,8 @@ public class Dialog_fragment_oder extends DialogFragment {
                 {
                     send_data_mn();
                     getDialog().dismiss();
-                    Toast.makeText(getActivity(),"Admin",Toast.LENGTH_LONG).show();
+
+                    Toast.makeText(getActivity(),"Successfully",Toast.LENGTH_LONG).show();
                 }
 
                 else if (session.isLoggedIn())
@@ -99,6 +107,7 @@ public class Dialog_fragment_oder extends DialogFragment {
 
     }
 
+    //pass data fragment to activity
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
@@ -138,4 +147,5 @@ public class Dialog_fragment_oder extends DialogFragment {
                 soluong.setText("1");
                 ghichu.setText("");
     }
+
 }

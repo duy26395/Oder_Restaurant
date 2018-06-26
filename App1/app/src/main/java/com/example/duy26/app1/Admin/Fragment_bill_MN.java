@@ -1,5 +1,6 @@
 package com.example.duy26.app1.Admin;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Fragment;
 import android.app.ProgressDialog;
@@ -32,7 +33,8 @@ import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class Fragment_bill_MN extends Fragment {
+public class Fragment_bill_MN extends Fragment{
+    private static final int THIS_REQUEST = 10;
     RecyclerView recyclerView;
     Connectionclass connectionclass;
     Adapter_bill_mn adapter_bill_mn;
@@ -42,11 +44,16 @@ public class Fragment_bill_MN extends Fragment {
     private String id_delete_bill;
     private int i =0;
     private Boolean check = false;
+    private String id_user,id_employess;
 
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        setTargetFragment(null,-1);
+    }
 
     @Nullable
     @Override
-    public View onCreateView(final LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(final LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState){
         View view = inflater.inflate(R.layout.fragment_bill_manager, container, false);
 
         recyclerView = (RecyclerView) view.findViewById(R.id.recyclerview_bill_mn);
@@ -113,69 +120,7 @@ public class Fragment_bill_MN extends Fragment {
                     i=0;
             }
         });
-//                    });
-//                    alertDialog.setPositiveButton("Huỷ", new DialogInterface.OnClickListener() {
-//                        @Override
-//                        public void onClick(DialogInterface dialog, int which) {
-//                            dialog.dismiss();
-//                        }
-//                    });
-//
-//                    AlertDialog alert = alertDialog.create();
-//                    alert.show();
-//                } else {
-//
-//                    Toast.makeText(getActivity(),"Chọn 1 để xoá",Toast.LENGTH_SHORT).show();
-//                    onDestroyView();
-//                }
-//                i=0;
-//            }
-//        });
-//        delete.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                final AlertDialog.Builder alertDialog = new AlertDialog.Builder(getActivity());
-//                alertDialog.setTitle("Xoá Hoá Đơn");
-//                alertDialog.setMessage("Bạn có muốn xoá không?");
-//                alertDialog.setCancelable(false);
-//                alertDialog.setNegativeButton("Đồng ý", new DialogInterface.OnClickListener() {
-//                    @Override
-//                    public void onClick(DialogInterface dialog, int which) {
-//
-//                        for (Data_mn_BILL_details number : data) {
-//                            if (number.isSelected()) {
-//
-//                                Connectionclass connectionclass;
-//                                connectionclass = new Connectionclass();
-//                                Connection connection = connectionclass.CONN();
-//
-//                                String query = "DELETE FROM [Bill] WHERE idbill =? ";
-//                                try {
-//                                    PreparedStatement preparedStatement = connection.prepareStatement(query);
-//                                    preparedStatement.setInt(1, number.getIdbill());
-//
-//                                    preparedStatement.executeUpdate();
-//
-//                                } catch (SQLException e) {
-//                                    e.printStackTrace();
-//                                }
-//                            }
-//                        }
-//                        onResume();
-//                        dialog.dismiss();
-//                    }
-//                });
-//                alertDialog.setPositiveButton("Huỷ", new DialogInterface.OnClickListener() {
-//                    @Override
-//                    public void onClick(DialogInterface dialog, int which) {
-//                        dialog.dismiss();
-//                    }
-//                });
-//
-//                AlertDialog alert = alertDialog.create();
-//                alert.show();
-//            }
-//        });
+
         adapter_bill_mn = new Adapter_bill_mn(data, getContext(), new Click_data_bill_details() {
 
             @Override
@@ -188,49 +133,48 @@ public class Fragment_bill_MN extends Fragment {
                     intent.putExtra("ID",Integer.toString(user.getIdbill()));
                     startActivity(intent);
                 }
-                else
-                {
-                    AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-                    builder.setTitle("Hoá Đơn "+id_delete_bill);
-                    builder.setMessage("Hoá đơn trống");
-                    final AlertDialog alert = builder.create();
-                    alert.show();
-                    final Timer timer = new Timer();
-                    timer.schedule(new TimerTask() {
-                        @Override
-                        public void run() {
-                            alert.dismiss();
-                            timer.cancel();
-                        }
-                    },3000);// 2s
+                else {
+                    Toast.makeText(getActivity(),"Hoá Đơn Trống",Toast.LENGTH_LONG).show();
+                    Intent intent = new Intent(getActivity(), Manager_Bill_Details.class);
+                    intent.putExtra("ID",Integer.toString(user.getIdbill()));
+                    startActivity(intent);
+
                 }
 
 
             }
         });
         recyclerView.setAdapter(adapter_bill_mn);
+        Button add_bill = view.findViewById(R.id.bill_mn_add);
+        add_bill.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                fragment_bill_add fragment_bill_add = new fragment_bill_add();
+                fragment_bill_add.setTargetFragment(Fragment_bill_MN.this,THIS_REQUEST);
+                fragment_bill_add.show(getFragmentManager(),null);
 
+            }
+        });
 
         return view;
     }
 
     private void check_id() {
-            connectionclass = new Connectionclass();
-            Connection connection = connectionclass.CONN();
-            try {
-                String query = "SELECT * FROM [Bill_details] WHERE idbill= '" + Integer.parseInt(id_delete_bill) + "'";
-                Statement preparedStatement = connection.createStatement();
-                ResultSet resultSet = preparedStatement.executeQuery(query);
-                if (resultSet.next()) {
-                    try {
-                        check = true;
-                    } catch (Exception e) {
-                    }
-                } else {
-                    check = false;
+        connectionclass = new Connectionclass();
+        Connection connection = connectionclass.CONN();
+        try {
+            String query = "SELECT * FROM [Bill_details] WHERE idbill= '" + Integer.parseInt(id_delete_bill) + "'";
+            Statement preparedStatement = connection.createStatement();
+            ResultSet resultSet = preparedStatement.executeQuery(query);
+            if (resultSet.next()) {
+                try {
+                    check = true;
+                } catch (Exception e) {
                 }
-            } catch (Exception e) { }
-
+            } else {
+                check = false;
+            }
+        } catch (Exception e) { }
 
     }
 
@@ -271,6 +215,23 @@ public class Fragment_bill_MN extends Fragment {
         data.clear();
         getdata_Server();
         adapter_bill_mn.update_Bill(data);
+    }
+
+
+    private void send_data_bill() {
+        connectionclass = new Connectionclass();
+        Connection connection = connectionclass.CONN();
+        String insertTableSQL = "INSERT INTO [Bill] "
+                + "(idemployess,iduser) VALUES"
+                + "(?,?)";
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(insertTableSQL);
+            preparedStatement.setString(1, id_employess);
+            preparedStatement.setString(2, id_user);
+
+
+            preparedStatement.executeUpdate();
+        }catch (Exception e){}
     }
 
     private class Delete_bill extends AsyncTask<String,String,String> {
@@ -333,7 +294,8 @@ public class Fragment_bill_MN extends Fragment {
     }
 
     private void delete_of_null() {
-            for (Data_mn_BILL_details number : data) {
+            for (Data_mn_BILL_details number : data)
+            {
                 if (number.isSelected()) {
 
                     Connectionclass connectionclass;
@@ -354,4 +316,14 @@ public class Fragment_bill_MN extends Fragment {
             }
     }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if(requestCode == THIS_REQUEST && data != null)
+        {
+            id_user = data.getStringExtra("ID_USER");
+            id_employess = data.getStringExtra("ID_EMP");
+            send_data_bill();
+            onResume();
+        }
+    }
 }

@@ -1,6 +1,8 @@
 package com.example.duy26.app1.Admin;
 
+import android.app.Activity;
 import android.app.Dialog;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -29,25 +31,30 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
 
-public class Bill_ofDetails_ADD extends android.support.v4.app.DialogFragment {
+public class Bill_ofDetails_ADD extends android.support.v4.app.DialogFragment implements Bill_ofDetails_Insert_interface{
     RecyclerView recyclerView;
     private ArrayList<Data_Food> data_food;
     Connectionclass connectionclass;
     Adapter_BillofDetails_add adapter_food;
+    private String id_bill,id_add;
+    private int sott;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.bill_ofdetails_add, container, false);
         recyclerView = (RecyclerView)view.findViewById(R.id.bill_ofDetails_recycle);
         recyclerView.setHasFixedSize(true);
+        id_bill = getArguments().getString("ID_BILL");
 
         view.findViewById(R.id.bill_ofDetails_button_close).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 getDialog().dismiss();
                 onDestroyView();
+
             }
         });
+
         RecyclerView.LayoutManager layoutManager = new StaggeredGridLayoutManager(3, LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(layoutManager);
         data_food = new ArrayList<Data_Food>();
@@ -93,6 +100,13 @@ public class Bill_ofDetails_ADD extends android.support.v4.app.DialogFragment {
             dialogFragment.getWindow().setLayout(width, height);
         }
     }
+
+    @Override
+    public void result(String id_food, int number) {
+        sott = number;
+        id_add = id_food;
+    }
+
     private class SyncData extends AsyncTask<String, String, String> {
 
         @Override
@@ -140,10 +154,9 @@ public class Bill_ofDetails_ADD extends android.support.v4.app.DialogFragment {
                     bundle.putString("ID_KEY", data_food.getIdfood());
                     bundle.putString("PRINCE",data_food.getGia());
                     bundle.putString("NAME_KEY",data_food.getName_food());
+                    bundle.putString("ID_BILL",id_bill);
                     Dialog_fragment_oder fragment_oder = new Dialog_fragment_oder();
                     fragment_oder.setArguments(bundle);
-//
-//                    FragmentManager fm = getSupportFragmentManager();
                     fragment_oder.show(getFragmentManager(),null);
 
 

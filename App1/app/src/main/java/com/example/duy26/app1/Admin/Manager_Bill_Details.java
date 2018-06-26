@@ -1,5 +1,6 @@
 package com.example.duy26.app1.Admin;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -12,10 +13,14 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.duy26.app1.Connectionclass;
 import com.example.duy26.app1.R;
 
+import java.io.PrintWriter;
+import java.io.StringWriter;
+import java.io.Writer;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -23,16 +28,17 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
-public class Manager_Bill_Details extends AppCompatActivity implements Bill_ofDetails_Insert_interface {
+public class Manager_Bill_Details extends AppCompatActivity implements Bill_ofDetails_Insert_interface{
     RecyclerView recyclerView;
     Connectionclass connectionclass;
     private ArrayList<Data_BillofDetails> data;
-    private int i;
+    private int i,sott;
     private String idbill;
     private Adapter_BillofDetails_mn adapter_bill_mn;
-    String tong = "0";
+    String tong = "0",id_add;
     TextView total;
-    private int REQUEST_INSERT = 6;
+    private boolean success = false;
+    private String msg= "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,8 +75,11 @@ public class Manager_Bill_Details extends AppCompatActivity implements Bill_ofDe
                 bill_ofDetails_add.setArguments(bundle);
 
                 bill_ofDetails_add.show(getSupportFragmentManager(),null);
+
+
             }
         });
+
         recyclerView.setAdapter(adapter_bill_mn);
         Button delete = findViewById(R.id.mn_bill_details_delete);
         delete.setOnClickListener(new View.OnClickListener() {
@@ -122,6 +131,7 @@ public class Manager_Bill_Details extends AppCompatActivity implements Bill_ofDe
         total.setText(tong);
         onResume();
     }
+
 
     private void total_sever() {
 
@@ -188,10 +198,48 @@ public class Manager_Bill_Details extends AppCompatActivity implements Bill_ofDe
         Log.e("LOG____ADAPTER_BILL", String.valueOf(data));
     }
 
+    private void send_add_data(){
+        try
+        {
+            connectionclass = new Connectionclass();
+            Connection connection = connectionclass.CONN();
+            if (connection == null) {
+                success = false;
+                msg = "Kết nối thất bại, kiểm tra kết nối";
+            }
+            else {
+                String insertTableSQL = "INSERT INTO [Bill_Details] "
+                        + "(idfood,Number,idbill) VALUES"
+                        + "(?,?,?)";
+                try {
+                    PreparedStatement preparedStatement = connection.prepareStatement(insertTableSQL);
+                    preparedStatement.setString(1, id_add);
+                    preparedStatement.setInt(2, sott);
+                    preparedStatement.setString(3,idbill);
+
+                    preparedStatement.executeUpdate();
+
+                    success = true;
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+
+        }catch(Exception e){
+            e.printStackTrace();
+            Writer write = new StringWriter();
+            e.printStackTrace(new PrintWriter(write));
+            msg = write.toString();
+            success = false;
+        }
+    }
+
     @Override
     public void result(String id_food, int number) {
 
-        int sott = number;
-        Log.e("SOOOOOOOOOTTTT",String.valueOf(sott));
+        id_add = id_food;
+        sott = number;
+        send_add_data();
+        onResume();
     }
 }

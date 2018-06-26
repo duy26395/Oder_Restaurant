@@ -154,11 +154,8 @@ public class Home_Eployess extends AppCompatActivity {
 
                     });
                     recyclerView.setAdapter(myAppdater);
-
-                    Log.e("HOME____EMPLOYEES_BEFORE DELETE", String.valueOf(data_oderdetails));
                     SQLiteHander sqLiteHander = new SQLiteHander(getBaseContext());
                     sqLiteHander.delete(data_oderdetails);
-                    Log.e("HOME____EMPLOYEES", String.valueOf(data_oderdetails));
 
                     EditText editText = (EditText)findViewById(R.id.hi);
                     editText.addTextChangedListener(new TextWatcher() {
@@ -239,13 +236,6 @@ public class Home_Eployess extends AppCompatActivity {
 
                 Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
                 startActivity(intent);
-
-//                SharedPreferences prefs = getApplicationContext().getSharedPreferences("ID_EMPLOYESS", MODE_PRIVATE );
-//                SharedPreferences.Editor editor = prefs.edit();
-//                editor.remove("ID");
-//                editor.commit();
-
-//                Log.e("DELETE________IDEMPLOYESS",prefs.getString("ID_EMPLOYESS",""));
 
             }
         });
